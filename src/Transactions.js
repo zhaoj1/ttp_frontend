@@ -23,7 +23,7 @@ export default class Transactions extends Component{
                                 {this.props.transactions.map(ele => {
                                     return(
                                         <>
-                                            <p>{ele.ticker.toUpperCase()} - {ele.shares} Shares @ ${ele.cost_purchased} </p>
+                                            <p style={{'font-weight':'bold'}}>{ele.ticker.toUpperCase()} - {ele.shares} Shares @ ${ele.cost_purchased} </p>
                                         </>
                                     )
                                 })}
