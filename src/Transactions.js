@@ -15,21 +15,27 @@ export default class Transactions extends Component{
                 {!this.props.currentUser?
                     this.props.history.push('/')
                     :
-                    <div className='transactions'>
+                    <>
                         <Header />
                         <div className='transactions'>
                             <div className='transactions-body'>
-                                <h1>Transactions</h1>
+                                <h1 className='transactions-header'>Transactions</h1>
                                 {this.props.transactions.map(ele => {
                                     return(
-                                        <>
-                                            <p style={{'font-weight':'bold'}}>{ele.ticker.toUpperCase()} - {ele.shares} Shares @ ${ele.cost_purchased} </p>
-                                        </>
+                                        <div className='transactions-line-item'>
+                                            {/* <p className='transactions-line-item'>{ele.ticker.toUpperCase()} - {ele.shares} Share(s) @ ${ele.cost_purchased.toFixed(2)}</p> */}
+                                            <div className='transactions-line-item-left'>
+                                                <label>{ele.ticker.toUpperCase()}</label>
+                                            </div>
+                                            <div className='transactions-line-item-right'>
+                                                <label className='sharesCost'>{ele.shares} Share(s) @ ${ele.cost_purchased.toFixed(2)}</label>
+                                            </div>
+                                        </div>
                                     )
                                 })}
                             </div>
                         </div>
-                    </div>
+                    </>
                 }
             </>
         ) 

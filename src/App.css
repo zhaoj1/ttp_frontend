@@ -91,8 +91,41 @@
 }
 
 .transactions{
+  height: 100%;
 }
 
 .transactions-body{
   text-align: center;
+  width: 30%;
+  margin: auto;
+  font-size: 20px;
 }
+
+.transactions-header{
+  text-align: center
+}
+
+.transactions-line-item{
+  font-weight: bold;
+  display: flex;
+  border-bottom: solid;
+  padding: 3%;
+}
+
+.transactions-line-item-left{
+  width:20%;
+  text-align:left;
+  margin-left: 10%;
+}
+
+.transactions-line-item-right{
+  width:70%;
+  text-align:left;
+  margin-left: 10%;
+}
+
+.salesCost{
+  text-align:left !important;
+  justify-content: left 
+}
+

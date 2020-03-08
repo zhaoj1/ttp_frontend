@@ -23,7 +23,8 @@ export default class MainContainer extends Component{
     setUser = (user) => {
         this.setState({
             currentUser: user
-        }, () => this.fetchTransactions())
+        }, ()=> this.fetchTransactions())
+
     }
 
     fetchTransactions = async () => {

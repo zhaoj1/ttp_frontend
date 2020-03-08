@@ -13,6 +13,10 @@ export default class Portfolio extends Component{
             total: 0
         }
     }
+    
+    componentDidMount(){
+        this.setPortfolioTotal();
+    }
 
     componentDidUpdate(prevProps){
         if(prevProps.tickerList !== this.props.tickerList){
@@ -23,10 +27,10 @@ export default class Portfolio extends Component{
     setPortfolioTotal(){
         var total = 0
         this.props.tickerList.map(ticker => {
-            total += this.props.transactions.filter(t=>t.ticker == ticker).reduce((total,currValue) => total + currValue.shares, 0) * this.props.transactions.filter(t=>t.ticker == ticker).reduce((total,currValue) => total + currValue.cost_purchased, 0).toFixed(2)
+            total += this.props.transactions.reduce((total,currValue) => total + currValue.cost_purchased, 0).toFixed(2)
         })
         this.setState({
-            total: total.toFixed(2)
+            total: parseFloat(total).toFixed(2)
         })
     }
 
@@ -90,9 +94,10 @@ export default class Portfolio extends Component{
                     this.props.history.push('/')
                     :
                     <div className='portfolio'>
-                        {console.log(this.state)}
                         <Header />
                         <div className='portfolio-body'>
+                            {console.log(this.props.transactions)}
+                            {console.log(this.props.tickerList)}
                             <div className='portfolio-left'>
                                 <h1>
                                     Portfolio (${this.state.total})
