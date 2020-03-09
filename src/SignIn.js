@@ -39,7 +39,7 @@ export default class SignIn extends Component{
         return (
             <div className='wrapper'>
                 <div className='sign-in' >
-                    <label>Sign In</label>
+                    <label className='title'>Sign In</label>
                     <form onSubmit={this.handleSubmit}>
                         <input
                             type='email'
@@ -55,8 +55,8 @@ export default class SignIn extends Component{
                             className='input'
                             onChange={this.handleChange}
                         ></input><br></br>
-                        <input type='submit' value='Sign In'></input><br></br>
-                        <Link to='/register' ><input type='button' value='Register'></input></Link>
+                        <input type='submit' value='Sign In' className='buttons'></input><br></br>
+                        <Link to='/register' ><input type='button' value='Register' className='buttons'></input></Link>
                     </form>
                 </div>
             </div>

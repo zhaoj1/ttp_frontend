@@ -19,16 +19,14 @@ export default class Portfolio extends Component{
     }
 
     componentDidUpdate(prevProps){
-        if(prevProps.tickerList !== this.props.tickerList){
+        if(prevProps.batch !== this.props.batch && this.props.batch.length !== 0){
             this.setPortfolioTotal();
         }
     }
 
-    setPortfolioTotal(){
+    setPortfolioTotal = () => {
         var total = 0
-        this.props.tickerList.map(ticker => {
-            total += this.props.transactions.reduce((total,currValue) => total + currValue.cost_purchased, 0).toFixed(2)
-        })
+        this.props.tickerList.map(ticker => total += (this.props.batch[ticker.toUpperCase()].quote.latestPrice * this.props.transactions.filter(t => t.ticker == ticker).reduce((total, currValue) => total + currValue.shares, 0)))
         this.setState({
             total: parseFloat(total).toFixed(2)
         })
@@ -96,21 +94,35 @@ export default class Portfolio extends Component{
                     <div className='portfolio'>
                         <Header />
                         <div className='portfolio-body'>
-                            {console.log(this.props.transactions)}
-                            {console.log(this.props.tickerList)}
                             <div className='portfolio-left'>
-                                <h1>
-                                    Portfolio (${this.state.total})
-                                </h1>
-                                {this.props.tickerList.length !== 0 ? 
+                                <h1>Portfolio (${this.state.total})</h1>
+                                {this.props.tickerList.length !== 0? 
                                     this.props.tickerList.map(ticker => {
                                         return (
                                             <div className='portfolio-line-item'>
                                                 <div className='portfolio-line-item-left'>
-                                                    <p>{ticker.toUpperCase()} - {this.props.transactions.filter(t => t.ticker == ticker).reduce((total, currValue) => total + currValue.shares, 0)} shares</p>
+                                                    <p>{ticker.toUpperCase()} - {this.props.transactions.filter(t => t.ticker == ticker).reduce((total, currValue) => total + currValue.shares, 0)} shares</p> 
                                                 </div>
                                                 <div className='portfolio-line-item-right'>
-                                                    <p className='cost'>${this.props.transactions.filter(t => t.ticker == ticker).reduce((total, currValue) => total + currValue.cost_purchased, 0).toFixed(2)}</p>
+                                                    {this.props.batch[ticker.toUpperCase()] !== undefined ?
+                                                        <p 
+                                                            className='cost'
+                                                            style={
+                                                                this.props.batch[ticker.toUpperCase()].quote.latestPrice < this.props.batch[ticker.toUpperCase()].quote.open ?
+                                                                    {'color':'red'}
+                                                                    :
+                                                                    this.props.batch[ticker.toUpperCase()].quote.latestPrice == this.props.batch[ticker.toUpperCase()].quote.open ?
+                                                                        {'color':'gray'}
+                                                                        :
+                                                                        this.props.batch[ticker.toUpperCase()].quote.latestPrice > this.props.batch[ticker.toUpperCase()].quote.open ?
+                                                                        {'color':'green'}
+                                                                        :
+                                                                        null
+                                                            }
+                                                        >${(this.props.transactions.filter(t => t.ticker == ticker).reduce((total, currValue) => total + currValue.shares, 0) * this.props.batch[ticker.toUpperCase()].quote.latestPrice).toFixed(2)}</p>
+                                                        :
+                                                        <label>Loading...</label>
+                                                    }
                                                 </div>
                                             </div>
                                         )
@@ -138,11 +150,13 @@ export default class Portfolio extends Component{
                                         value={this.state.quantity}
                                         onChange={this.handleChange}
                                         className='input'
+                                        min='1'
                                         required
                                     ></input><br></br>
                                     <input
                                         type='submit'
                                         value='Purchase Stock'
+                                        className='buttons'
                                     ></input>
                                 </form>
                             </div>

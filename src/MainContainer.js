@@ -5,6 +5,7 @@ import Register from './Register'
 import Portfolio from './Portfolio'
 import Transactions from './Transactions'
 
+const IEX = 'https://sandbox.iexapis.com/stable/'
 var portfolio
 
 export default class MainContainer extends Component{
@@ -14,17 +15,18 @@ export default class MainContainer extends Component{
         this.state = {
             currentUser: null,
             transactions: [],
-            tickerList: []
+            tickerList: [],
+            batch: {}
         }
         this.setUser = this.setUser.bind(this)
         this.updateUserCash = this.updateUserCash.bind(this)
+        this.fetchBatch = this.fetchBatch.bind(this)
     }
 
     setUser = (user) => {
         this.setState({
             currentUser: user
         }, ()=> this.fetchTransactions())
-
     }
 
     fetchTransactions = async () => {
@@ -34,13 +36,29 @@ export default class MainContainer extends Component{
             transactions: [
                 ...response
             ]
-        }))
+        }), () => this.fetchBatch())
         portfolio = new Set(this.state.transactions.map(t => t.ticker))
-        this.setState({tickerList: [...portfolio]})
+        this.setState({tickerList: [...portfolio]}, 
+            () => this.fetchBatch(), this.fetchBatchInterval()
+        )
     }
 
     updateUserCash = (quantity, cost) => {
         this.state.currentUser.cash = this.state.currentUser.cash - parseInt(quantity) * parseFloat(cost)
+    }
+
+    fetchBatch = () => {
+        fetch(IEX + `stock/market/batch?symbols=${this.state.tickerList.join(',')}&types=quote&range=1m&last=5&token=` + process.env.REACT_APP_IEX_TEST)
+        .then(resp => resp.json())
+        .then(response => this.setState({
+            batch: {
+                ...response
+            }
+        }))
+    }
+
+    fetchBatchInterval = () => {
+        setInterval(() => this.fetchBatch(), 10000)
     }
     
     render () {
@@ -75,6 +93,8 @@ export default class MainContainer extends Component{
                                 transactions={this.state.transactions}
                                 tickerList={this.state.tickerList}
                                 fetchTransactions={this.fetchTransactions}
+                                batch={this.state.batch}
+                                fetchBatch={this.fetchBatch}
                             />
                         }
                     ></Route>

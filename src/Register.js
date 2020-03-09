@@ -34,9 +34,15 @@ export default class Register extends Component{
             })
             .then(res => res.json())
             .then(response => {
-                this.props.setUser(response.user)
-                this.props.history.push('/portfolio')
-            })        
+                if(response.errors){
+                    alert('There is already an account using that email address')
+                    document.getElementsByName('email_address')[0].value = ''
+                    this.setState({email_address: ''})
+                } else {
+                    this.props.setUser(response.user)
+                    this.props.history.push('/portfolio')
+                }
+            })
         } else {
             alert('passwords must match')
         }
@@ -46,7 +52,7 @@ export default class Register extends Component{
         return (
             <div className='wrapper'>
                 <div className='sign-in' >
-                    <label>Register</label>
+                    <label className='title'>Register</label>
                     <form onSubmit={this.handleSubmit}>
                         <input
                             type='input'
@@ -76,8 +82,8 @@ export default class Register extends Component{
                             className='input'
                             onChange={this.handleChange}
                         ></input><br></br>
-                        <input type='submit' value='Register'></input><br></br>
-                        <Link to='/' ><input type='button' value='Back'></input></Link>
+                        <input type='submit' value='Register' className='buttons'></input><br></br>
+                        <Link to='/' ><input type='button' value='Back' className='buttons'></input></Link>
                     </form>
                 </div>
             </div>

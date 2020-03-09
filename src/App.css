@@ -15,6 +15,12 @@
   text-align: center;
 }
 
+.title{
+  font-size:25px;
+  font-weight: bold;
+  /* margin-bottom: 10px; */
+}
+
 .sign-in{
   border-style: solid;
   width: 20%;
@@ -64,6 +70,7 @@
   margin-bottom: 3%;
   display:flex;
   justify-content: space-around;
+  font-size: 20px;
 }
 
 .portfolio-line-item-left{
@@ -81,7 +88,7 @@
 
 .buttons{
   font-size:20px;
-  margin: 0 5px 0 5px;
+  margin: 0 5px 5px 5px;
   border-radius: 10px;
 }
 
