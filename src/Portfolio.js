@@ -75,24 +75,24 @@ export default class Portfolio extends Component{
     handleSubmit = (event) => {
         event.preventDefault();
         fetch(process.env.IEX + `stock/${this.state.ticker}/quote?token=` + process.env.REACT_APP_IEX_TEST)
-        .then(resp => resp.json())
-        .then(response => {
-            this.postTransaction(response.latestPrice);
-            this.setState({
-                ticker: '',
-                quantity: 0  
-            })
-            document.getElementsByName('ticker')[0].focus()
-        }).catch(error => {
-            if(error){
-                this.props.setErrors('Please enter a valid ticker.')
-                this.setState({
-                    ticker: '',
-                    quantity: 0  
-                })
-                document.getElementsByName('ticker')[0].focus()
-            }
-        })
+        .then(resp => resp.json()).then(console.log)
+        // .then(response => {
+        //     this.postTransaction(response.latestPrice);
+        //     this.setState({
+        //         ticker: '',
+        //         quantity: 0  
+        //     })
+        //     document.getElementsByName('ticker')[0].focus()
+        // }).catch(error => {
+        //     if(error){
+        //         this.props.setErrors('Please enter a valid ticker.')
+        //         this.setState({
+        //             ticker: '',
+        //             quantity: 0  
+        //         })
+        //         document.getElementsByName('ticker')[0].focus()
+        //     }
+        // })
     }
 
     render () {
