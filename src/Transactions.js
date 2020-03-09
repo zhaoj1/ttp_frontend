@@ -20,7 +20,7 @@ export default class Transactions extends Component{
                         <div className='transactions'>
                             <div className='transactions-body'>
                                 <h1 className='transactions-header'>Transactions</h1>
-                                {this.props.transactions.reverse().map(ele => {
+                                {[...this.props.transactions].reverse().map(ele => {
                                     return(
                                         <div className='transactions-line-item'>
                                             <div className='transactions-line-item-left'>
