@@ -29,25 +29,6 @@ export default class MainContainer extends Component{
         }, ()=> this.fetchTransactions())
     }
 
-    reset = () => {
-        this.setState({
-            currentUser: null,
-            transactions: [],
-            tickerList: [],
-            batch: {},
-            errors: ''
-        })
-    }
-
-    componentDidMount(){
-        window.addEventListener(this.reset)
-    }
-
-    componentWillUnmount(){
-        this.reset()
-        window.removeEventListener(this.reset)
-    }
-
     fetchTransactions = async () => {
         const portfolioTransactions = await fetch(process.env.REACT_APP_BACKEND_API + 'users/' + this.state.currentUser.id + `/transactions`)
         .then(resp => resp.json())
