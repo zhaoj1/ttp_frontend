@@ -133,7 +133,6 @@
 
 .transactions{
   height: 100%;
-  overflow-y: scroll;
 }
 
 .transactions-body{
@@ -141,6 +140,7 @@
   width: 38%;
   margin: auto;
   font-size: 20px;
+  overflow-y: scroll;
 }
 
 .transactions-header{
