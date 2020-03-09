@@ -49,9 +49,9 @@ export default class MainContainer extends Component{
     }
 
     fetchBatch = () => {
-        this.state.tickerList.length == 0 ?
-            null
-            :
+        // this.state.tickerList.length == 0 ?
+            // null
+            // :
             fetch(IEX + `stock/market/batch?symbols=${this.state.tickerList.join(',')}&types=quote&range=1m&last=5&token=` + process.env.REACT_APP_IEX_TEST)
             .then(resp => resp.json())
             .then(response => this.setState({
