@@ -27,7 +27,7 @@ export default class Transactions extends Component{
                                                 <label className='line-item-text'>{ele.ticker.toUpperCase()}</label>
                                             </div>
                                             <div className='transactions-line-item-right'>
-                                                <label className='line-item-text'>{ele.shares} Share(s) @ ${ele.cost_purchased.toFixed(2)}</label>
+                                                <label className='line-item-text'>{ele.shares} Share(s) @ ${ele.cost_purchased.toFixed(2)} per share</label>
                                             </div>
                                         </div>
                                     )

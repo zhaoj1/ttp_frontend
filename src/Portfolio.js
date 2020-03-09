@@ -70,7 +70,7 @@ export default class Portfolio extends Component{
             }
             this.props.clearErrors();
         }else{
-            this.props.setErrors('Insufficient Funds.')
+            this.props.setErrors(`Insufficient Funds - $${parseFloat(cost).toFixed(2)} per share`)
         }
     }
 
@@ -119,15 +119,43 @@ export default class Portfolio extends Component{
                                                             this.props.batch[ticker.toUpperCase()] !== null ?
                                                                 this.props.batch[ticker.toUpperCase()].quote.open == null ? 
                                                                     <>
-                                                                    Prev Close: ${this.props.batch[ticker.toUpperCase()].quote.previousClose.toFixed(2)}
-                                                                    <br></br>
-                                                                    Current Price: ${this.props.batch[ticker.toUpperCase()].quote.latestPrice.toFixed(2)}
+                                                                        Prev Close: ${this.props.batch[ticker.toUpperCase()].quote.previousClose.toFixed(2)}
+                                                                        <br></br>
+                                                                        Curr Price: 
+                                                                        <span 
+                                                                            style={
+                                                                                this.props.batch[ticker.toUpperCase()].quote.latestPrice < this.props.batch[ticker.toUpperCase()].quote.previousClose ?
+                                                                                    {'color':'red'}
+                                                                                    :
+                                                                                    this.props.batch[ticker.toUpperCase()].quote.latestPrice == this.props.batch[ticker.toUpperCase()].quote.previousClose ?
+                                                                                        {'color':'gray'}
+                                                                                        :
+                                                                                        this.props.batch[ticker.toUpperCase()].quote.latestPrice > this.props.batch[ticker.toUpperCase()].quote.previousClose ?
+                                                                                        {'color':'green'}
+                                                                                        :
+                                                                                        null
+                                                                            }
+                                                                        > ${this.props.batch[ticker.toUpperCase()].quote.latestPrice.toFixed(2)}</span>
                                                                     </>
                                                                     :
                                                                     <>
-                                                                    Open Price: ${this.props.batch[ticker.toUpperCase()].quote.open.toFixed(2)}
-                                                                    <br></br>
-                                                                    Current Price: ${this.props.batch[ticker.toUpperCase()].quote.latestPrice.toFixed(2)}
+                                                                        Open Price: ${this.props.batch[ticker.toUpperCase()].quote.open.toFixed(2)}
+                                                                        <br></br>
+                                                                        Curr Price: 
+                                                                        <span 
+                                                                            style={
+                                                                                this.props.batch[ticker.toUpperCase()].quote.latestPrice < this.props.batch[ticker.toUpperCase()].quote.previousClose ?
+                                                                                    {'color':'red'}
+                                                                                    :
+                                                                                    this.props.batch[ticker.toUpperCase()].quote.latestPrice == this.props.batch[ticker.toUpperCase()].quote.previousClose ?
+                                                                                        {'color':'gray'}
+                                                                                        :
+                                                                                        this.props.batch[ticker.toUpperCase()].quote.latestPrice > this.props.batch[ticker.toUpperCase()].quote.previousClose ?
+                                                                                        {'color':'green'}
+                                                                                        :
+                                                                                        null
+                                                                            }
+                                                                        > ${this.props.batch[ticker.toUpperCase()].quote.latestPrice.toFixed(2)}</span>
                                                                     </>
                                                             :
                                                             null

@@ -73,7 +73,6 @@
   display:flex;
   justify-content: space-around;
   font-size: 20px;
-  
 }
 
 .portfolio-line-item-left{
@@ -92,8 +91,10 @@
 
 .buttons{
   font-size:20px;
-  margin: 0 5px 5px 5px;
+  margin: 5px 5px 5px 5px;
   border-radius: 10px;
+  border-width: 2px;
+  border-color: black;
 }
 
 .buttons:active, .buttons:visited{
@@ -102,21 +103,25 @@
 }
 
 .buttons:hover{
-  background-color: rgb(100,100,300);
+  background-color: rgb(50,50,150);
   color:white;
+  border-color: navy;
 }
 
 .header{
   text-align:right;
   padding: 10px 20px 0 0;
+  font-size:25px;
 }
 
 .link, .link:active, .link:visited{
   text-decoration: none;
+  font-weight:bold;
+  color:black;
 }
 
 .link:hover{
-  font-weight:bold
+  color:rgb(50,50,250)
 }
 
 .transactions{
@@ -125,7 +130,7 @@
 
 .transactions-body{
   text-align: center;
-  width: 30%;
+  width: 38%;
   margin: auto;
   font-size: 20px;
 }
@@ -144,7 +149,7 @@
 .transactions-line-item-left{
   width:20%;
   text-align:left;
-  margin-left: 10%;
+  margin-left: 5%;
 }
 
 .transactions-line-item-right{
