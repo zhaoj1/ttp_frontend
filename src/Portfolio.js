@@ -40,7 +40,7 @@ export default class Portfolio extends Component{
     postTransaction = async (cost) => {
         if(this.props.currentUser.cash > (this.state.quantity * parseInt(cost))){
             this.props.updateUserCash(this.state.quantity, parseFloat(cost));
-            const postResp = await fetch(process.env.BACKEND_API + 'users/' + this.props.currentUser.id + `/transactions`, {
+            const postResp = await fetch(process.env.REACT_APP_BACKEND_API + 'users/' + this.props.currentUser.id + `/transactions`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export default class Portfolio extends Component{
                 })
             })
             if(postResp){
-                fetch(process.env.BACKEND_API + 'users/' + this.props.currentUser.id, {
+                fetch(process.env.REACT_APP_BACKEND_API + 'users/' + this.props.currentUser.id, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export default class Portfolio extends Component{
 
     handleSubmit = (event) => {
         event.preventDefault();
-        fetch(process.env.IEX + `stock/${this.state.ticker}/quote?token=` + process.env.REACT_APP_IEX_TEST)
+        fetch(process.env.REACT_APP_IEX + `stock/${this.state.ticker}/quote?token=` + process.env.REACT_APP_IEX_TEST)
         .then(resp => resp.json()).then(console.log)
         // .then(response => {
         //     this.postTransaction(response.latestPrice);
