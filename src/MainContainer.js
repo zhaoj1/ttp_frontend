@@ -31,7 +31,7 @@ export default class MainContainer extends Component{
     }
 
     fetchTransactions = async () => {
-        const portfolioTransactions = await fetch('http://localhost:3000/users/' + this.state.currentUser.id + `/transactions`)
+        const portfolioTransactions = await fetch('https://stock-app--backend.herokuapp.com/users/' + this.state.currentUser.id + `/transactions`)
         .then(resp => resp.json())
         .then(response => this.setState({
             transactions: [

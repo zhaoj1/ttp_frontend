@@ -42,7 +42,7 @@ export default class Portfolio extends Component{
     postTransaction = async (cost) => {
         if(this.props.currentUser.cash > (this.state.quantity * parseInt(cost))){
             this.props.updateUserCash(this.state.quantity, parseFloat(cost));
-            const postResp = await fetch('http://localhost:3000/users/' + this.props.currentUser.id + `/transactions`, {
+            const postResp = await fetch('https://stock-app--backend.herokuapp.com/users/' + this.props.currentUser.id + `/transactions`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export default class Portfolio extends Component{
                 })
             })
             if(postResp){
-                fetch('http://localhost:3000/users/' + this.props.currentUser.id, {
+                fetch('https://stock-app--backend.herokuapp.com/users/' + this.props.currentUser.id, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
