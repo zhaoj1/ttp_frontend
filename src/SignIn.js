@@ -16,7 +16,7 @@ export default class SignIn extends Component{
 
     handleSubmit = (event) => {
         event.preventDefault();
-        fetch(`https://stock-app--backend.herokuapp.com/signin`,{
+        fetch(process.env.REACT_APP_BACKEND_API + `signin`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

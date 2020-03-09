@@ -19,7 +19,7 @@ export default class Register extends Component{
     handleSubmit = (event) => {
         event.preventDefault();
         if(this.state.password == this.state.passwordConfirm){
-            fetch(`https://stock-app--backend.herokuapp.com/register`,{
+            fetch(process.env.REACT_APP_BACKEND_API + `register`,{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

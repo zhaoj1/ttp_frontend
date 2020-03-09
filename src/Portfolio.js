@@ -7,8 +7,8 @@ export default class Portfolio extends Component{
         super();
         this.state={
             ticker: '',
-            quantity: 0,
-            total: ''
+            quantity: '',
+            total: 0
         }
     }
     
@@ -38,8 +38,8 @@ export default class Portfolio extends Component{
     }
 
     postTransaction = async (cost) => {
-        if(this.props.currentUser.cash > (this.state.quantity * parseInt(cost))){
-            this.props.updateUserCash(this.state.quantity, parseFloat(cost));
+        if(this.props.currentUser.cash > (parseInt(this.state.quantity) * parseInt(cost))){
+            this.props.updateUserCash(parseInt(this.state.quantity), parseFloat(cost));
             const postResp = await fetch(process.env.REACT_APP_BACKEND_API + 'users/' + this.props.currentUser.id + `/transactions`, {
                 method: 'POST',
                 headers: {
