@@ -16,7 +16,8 @@ export default class MainContainer extends Component{
             currentUser: null,
             transactions: [],
             tickerList: [],
-            batch: {}
+            batch: {},
+            errors: ''
         }
         this.setUser = this.setUser.bind(this)
         this.updateUserCash = this.updateUserCash.bind(this)
@@ -60,10 +61,23 @@ export default class MainContainer extends Component{
     fetchBatchInterval = () => {
         setInterval(() => this.fetchBatch(), 10000)
     }
+
+    setErrors = (error) => {
+        this.setState({
+            errors: error
+        })
+    }
+
+    clearErrors = () => {
+        this.setState({
+            errors: ''
+        })
+    }
     
     render () {
         return (
             <div className='main-container'>
+                {console.log(this.state.batch)}
                 <Switch>
                     <Route
                         exact path='/'
@@ -71,6 +85,9 @@ export default class MainContainer extends Component{
                             (routerProps) => <SignIn 
                                 {...routerProps}
                                 setUser={this.setUser}
+                                setErrors={this.setErrors}
+                                clearErrors={this.clearErrors}
+                                errors={this.state.errors}
                             />
                         }
                     ></Route>
@@ -80,6 +97,9 @@ export default class MainContainer extends Component{
                             (routerProps) => <Register 
                                 {...routerProps}
                                 setUser={this.setUser}
+                                setErrors={this.setErrors}
+                                clearErrors={this.clearErrors}
+                                errors={this.state.errors}
                             />
                         }
                     ></Route>
@@ -95,6 +115,9 @@ export default class MainContainer extends Component{
                                 fetchTransactions={this.fetchTransactions}
                                 batch={this.state.batch}
                                 fetchBatch={this.fetchBatch}
+                                setErrors={this.setErrors}
+                                clearErrors={this.clearErrors}
+                                errors={this.state.errors}
                             />
                         }
                     ></Route>

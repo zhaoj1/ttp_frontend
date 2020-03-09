@@ -16,9 +16,9 @@
 }
 
 .title{
-  font-size:25px;
+  font-size:30px;
   font-weight: bold;
-  /* margin-bottom: 10px; */
+  margin-bottom: 2%;
 }
 
 .sign-in{
@@ -26,6 +26,8 @@
   width: 20%;
   margin: auto;
   padding: 10px;
+  border-radius: 15px;
+  background-color: rgb(250,250,300)
 }
 
 .input{
@@ -71,10 +73,12 @@
   display:flex;
   justify-content: space-around;
   font-size: 20px;
+  
 }
 
 .portfolio-line-item-left{
   float: left;
+  text-align:left;
 }
 
 .portfolio-line-item-right{
@@ -92,9 +96,27 @@
   border-radius: 10px;
 }
 
+.buttons:active, .buttons:visited{
+  text-decoration: none;
+  outline:none;
+}
+
+.buttons:hover{
+  background-color: rgb(100,100,300);
+  color:white;
+}
+
 .header{
   text-align:right;
   padding: 10px 20px 0 0;
+}
+
+.link, .link:active, .link:visited{
+  text-decoration: none;
+}
+
+.link:hover{
+  font-weight:bold
 }
 
 .transactions{
@@ -136,3 +158,11 @@
   justify-content: left 
 }
 
+.line-item-text{
+  font-weight:bold;
+}
+
+.errors{
+  font-weight: bold;
+  color: red;
+}

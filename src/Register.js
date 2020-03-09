@@ -35,16 +35,20 @@ export default class Register extends Component{
             .then(res => res.json())
             .then(response => {
                 if(response.errors){
-                    alert('There is already an account using that email address')
+                    this.props.clearErrors();
+                    this.props.setErrors('There is already an account using that email address.')
                     document.getElementsByName('email_address')[0].value = ''
+                    document.getElementsByName('email_address')[0].focus()
                     this.setState({email_address: ''})
                 } else {
+                    this.props.clearErrors();
                     this.props.setUser(response.user)
                     this.props.history.push('/portfolio')
                 }
             })
         } else {
-            alert('passwords must match')
+            this.props.clearErrors();
+            this.props.setErrors('Passwords must match.')
         }
     }
     
@@ -52,7 +56,7 @@ export default class Register extends Component{
         return (
             <div className='wrapper'>
                 <div className='sign-in' >
-                    <label className='title'>Register</label>
+                    <div className='title'>Register</div>
                     <form onSubmit={this.handleSubmit}>
                         <input
                             type='input'
@@ -60,6 +64,7 @@ export default class Register extends Component{
                             placeholder='Name'
                             className='input'
                             onChange={this.handleChange}
+                            required
                         ></input><br></br>
                         <input
                             type='email'
@@ -67,6 +72,7 @@ export default class Register extends Component{
                             placeholder='Email'
                             className='input'
                             onChange={this.handleChange}
+                            required
                         ></input><br></br>
                         <input
                             type='password'
@@ -74,6 +80,7 @@ export default class Register extends Component{
                             placeholder='Password'
                             className='input'
                             onChange={this.handleChange}
+                            required
                         ></input><br></br>
                         <input
                             type='password'
@@ -81,9 +88,17 @@ export default class Register extends Component{
                             placeholder='Confirm Password'
                             className='input'
                             onChange={this.handleChange}
+                            required
                         ></input><br></br>
                         <input type='submit' value='Register' className='buttons'></input><br></br>
-                        <Link to='/' ><input type='button' value='Back' className='buttons'></input></Link>
+                        <Link to='/' ><input type='button' value='Back' className='buttons' onClick={() => this.props.clearErrors()}></input></Link>
+                        {this.props.errors.length == 0 ?
+                            null
+                            :
+                            <p className='errors'>
+                                {this.props.errors}
+                            </p>
+                        }
                     </form>
                 </div>
             </div>

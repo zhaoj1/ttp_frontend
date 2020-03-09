@@ -27,10 +27,11 @@ export default class SignIn extends Component{
         .then(res => res.json())
         .then(response => {
             if (response.errors){
-                alert('Username or Password incorrect')
+                this.props.setErrors('Username or Password incorrect.')
             } else {
                 this.props.setUser(response.user)
                 this.props.history.push('/portfolio')
+                this.props.clearErrors()
             }
         })        
     }
@@ -39,7 +40,7 @@ export default class SignIn extends Component{
         return (
             <div className='wrapper'>
                 <div className='sign-in' >
-                    <label className='title'>Sign In</label>
+                    <div className='title'>Sign In</div>
                     <form onSubmit={this.handleSubmit}>
                         <input
                             type='email'
@@ -47,6 +48,7 @@ export default class SignIn extends Component{
                             placeholder='Email'
                             className='input'
                             onChange={this.handleChange}
+                            required
                         ></input><br></br>
                         <input
                             type='password'
@@ -54,9 +56,17 @@ export default class SignIn extends Component{
                             placeholder='Password'
                             className='input'
                             onChange={this.handleChange}
+                            required
                         ></input><br></br>
                         <input type='submit' value='Sign In' className='buttons'></input><br></br>
-                        <Link to='/register' ><input type='button' value='Register' className='buttons'></input></Link>
+                        <Link to='/register' ><input type='button' value='Register' className='buttons' onClick={() => this.props.clearErrors()}></input></Link>
+                        {this.props.errors.length == 0 ?
+                            null
+                            :
+                            <p className='errors'>
+                                {this.props.errors}
+                            </p>
+                        }
                     </form>
                 </div>
             </div>

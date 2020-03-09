@@ -16,6 +16,7 @@ export default class Portfolio extends Component{
     
     componentDidMount(){
         this.setPortfolioTotal();
+        this.props.clearErrors();
     }
 
     componentDidUpdate(prevProps){
@@ -67,8 +68,9 @@ export default class Portfolio extends Component{
                 })
                 this.props.fetchTransactions();
             }
+            this.props.clearErrors();
         }else{
-            alert('Insufficient Funds')
+            this.props.setErrors('Insufficient Funds.')
         }
     }
 
@@ -77,10 +79,20 @@ export default class Portfolio extends Component{
         fetch(IEX + `stock/${this.state.ticker}/quote?token=` + process.env.REACT_APP_IEX_TEST)
         .then(resp => resp.json())
         .then(response => {
-            this.postTransaction(response.latestPrice)
+            this.postTransaction(response.latestPrice);
+            this.setState({
+                ticker: '',
+                quantity: 0  
+            })
+            document.getElementsByName('ticker')[0].focus()
         }).catch(error => {
             if(error){
-                return alert('Please enter a valid ticker.')
+                this.props.setErrors('Please enter a valid ticker.')
+                this.setState({
+                    ticker: '',
+                    quantity: 0  
+                })
+                document.getElementsByName('ticker')[0].focus()
             }
         })
     }
@@ -101,25 +113,66 @@ export default class Portfolio extends Component{
                                         return (
                                             <div className='portfolio-line-item'>
                                                 <div className='portfolio-line-item-left'>
-                                                    <p>{ticker.toUpperCase()} - {this.props.transactions.filter(t => t.ticker == ticker).reduce((total, currValue) => total + currValue.shares, 0)} shares</p> 
+                                                    <p className='line-item-text'>
+                                                        {ticker.toUpperCase()} - {this.props.transactions.filter(t => t.ticker == ticker).reduce((total, currValue) => total + currValue.shares, 0)} share(s) <br></br>
+                                                        {this.props.batch[ticker.toUpperCase()] !== undefined &&
+                                                            this.props.batch[ticker.toUpperCase()] !== null ?
+                                                                this.props.batch[ticker.toUpperCase()].quote.open == null ? 
+                                                                    <>
+                                                                    Prev Close: ${this.props.batch[ticker.toUpperCase()].quote.previousClose.toFixed(2)}
+                                                                    <br></br>
+                                                                    Current Price: ${this.props.batch[ticker.toUpperCase()].quote.latestPrice.toFixed(2)}
+                                                                    </>
+                                                                    :
+                                                                    <>
+                                                                    Open Price: ${this.props.batch[ticker.toUpperCase()].quote.open.toFixed(2)}
+                                                                    <br></br>
+                                                                    Current Price: ${this.props.batch[ticker.toUpperCase()].quote.latestPrice.toFixed(2)}
+                                                                    </>
+                                                            :
+                                                            null
+                                                        } 
+                                                    </p> 
                                                 </div>
                                                 <div className='portfolio-line-item-right'>
+                                                    <br></br>
                                                     {this.props.batch[ticker.toUpperCase()] !== undefined ?
-                                                        <p 
-                                                            className='cost'
-                                                            style={
-                                                                this.props.batch[ticker.toUpperCase()].quote.latestPrice < this.props.batch[ticker.toUpperCase()].quote.open ?
-                                                                    {'color':'red'}
-                                                                    :
-                                                                    this.props.batch[ticker.toUpperCase()].quote.latestPrice == this.props.batch[ticker.toUpperCase()].quote.open ?
-                                                                        {'color':'gray'}
+                                                        this.props.batch[ticker.toUpperCase()].quote.open == null ?
+                                                            <p 
+                                                                className='line-item-text'
+                                                                style={
+                                                                    this.props.batch[ticker.toUpperCase()].quote.latestPrice < this.props.batch[ticker.toUpperCase()].quote.previousClose ?
+                                                                        {'color':'red'}
                                                                         :
-                                                                        this.props.batch[ticker.toUpperCase()].quote.latestPrice > this.props.batch[ticker.toUpperCase()].quote.open ?
-                                                                        {'color':'green'}
+                                                                        this.props.batch[ticker.toUpperCase()].quote.latestPrice == this.props.batch[ticker.toUpperCase()].quote.previousClose ?
+                                                                            {'color':'gray'}
+                                                                            :
+                                                                            this.props.batch[ticker.toUpperCase()].quote.latestPrice > this.props.batch[ticker.toUpperCase()].quote.previousClose ?
+                                                                            {'color':'green'}
+                                                                            :
+                                                                            null
+                                                                }
+                                                            >
+                                                            ${(this.props.transactions.filter(t => t.ticker == ticker).reduce((total, currValue) => total + currValue.shares, 0) * this.props.batch[ticker.toUpperCase()].quote.latestPrice).toFixed(2)}
+                                                        </p>
+                                                            :
+                                                            <p 
+                                                                className='line-item-text'
+                                                                style={
+                                                                    this.props.batch[ticker.toUpperCase()].quote.latestPrice < this.props.batch[ticker.toUpperCase()].quote.open ?
+                                                                        {'color':'red'}
                                                                         :
-                                                                        null
-                                                            }
-                                                        >${(this.props.transactions.filter(t => t.ticker == ticker).reduce((total, currValue) => total + currValue.shares, 0) * this.props.batch[ticker.toUpperCase()].quote.latestPrice).toFixed(2)}</p>
+                                                                        this.props.batch[ticker.toUpperCase()].quote.latestPrice == this.props.batch[ticker.toUpperCase()].quote.open ?
+                                                                            {'color':'gray'}
+                                                                            :
+                                                                            this.props.batch[ticker.toUpperCase()].quote.latestPrice > this.props.batch[ticker.toUpperCase()].quote.open ?
+                                                                            {'color':'green'}
+                                                                            :
+                                                                            null
+                                                                }
+                                                            >
+                                                            ${(this.props.transactions.filter(t => t.ticker == ticker).reduce((total, currValue) => total + currValue.shares, 0) * this.props.batch[ticker.toUpperCase()].quote.latestPrice).toFixed(2)}
+                                                        </p>
                                                         :
                                                         <label>Loading...</label>
                                                     }
@@ -158,6 +211,13 @@ export default class Portfolio extends Component{
                                         value='Purchase Stock'
                                         className='buttons'
                                     ></input>
+                                    {this.props.errors.length == 0 ?
+                                        null
+                                        :
+                                        <p className='errors'>
+                                            {this.props.errors}
+                                        </p>
+                                    }
                                 </form>
                             </div>
                         </div>
