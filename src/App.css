@@ -54,7 +54,11 @@
   display: flex;
   flex-direction: column;
   width:45%;
+}
+
+.portfolio-list{
   overflow-y:scroll;
+  max-height:500px;
 }
 
 .portfolio-right{

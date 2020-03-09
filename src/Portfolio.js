@@ -107,6 +107,7 @@ export default class Portfolio extends Component{
                         <div className='portfolio-body'>
                             <div className='portfolio-left'>
                                 <h1>Portfolio (${this.state.total})</h1>
+                                <div className='portfolio-list'>
                                 {this.props.tickerList.length !== 0? 
                                     this.props.tickerList.map(ticker => {
                                         return (
@@ -210,6 +211,7 @@ export default class Portfolio extends Component{
                                     :
                                     null
                                 }
+                                </div>
                             </div>
                             <div className='portfolio-right'>
                                 <h1>Cash - ${this.props.currentUser.cash.toFixed(2)}</h1>
