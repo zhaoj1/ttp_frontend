@@ -8,7 +8,7 @@ export default class Portfolio extends Component{
         this.state={
             ticker: '',
             quantity: 0,
-            total: 0
+            total: ''
         }
     }
     
@@ -80,7 +80,7 @@ export default class Portfolio extends Component{
             this.postTransaction(response.latestPrice);
             this.setState({
                 ticker: '',
-                quantity: 0  
+                quantity: ''
             })
             document.getElementsByName('ticker')[0].focus()
         }).catch(error => {
@@ -88,7 +88,7 @@ export default class Portfolio extends Component{
                 this.props.setErrors('Please enter a valid ticker.')
                 this.setState({
                     ticker: '',
-                    quantity: 0  
+                    quantity: ''
                 })
                 document.getElementsByName('ticker')[0].focus()
             }
@@ -98,6 +98,7 @@ export default class Portfolio extends Component{
     render () {
         return (
             <>
+            {console.log(this.props.transactions, this.props.transactions.reverse())}
                 {!this.props.currentUser?
                     this.props.history.push('/')
                     :
