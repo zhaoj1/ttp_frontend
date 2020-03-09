@@ -103,9 +103,10 @@
 }
 
 .buttons:hover{
-  background-color: rgb(50,50,150);
+  background-color: rgb(50,50,200);
   color:white;
   border-color: navy;
+  cursor: pointer;
 }
 
 .header{
@@ -121,7 +122,8 @@
 }
 
 .link:hover{
-  color:rgb(50,50,250)
+  color:rgb(50,50,250);
+  cursor: pointer;
 }
 
 .transactions{
