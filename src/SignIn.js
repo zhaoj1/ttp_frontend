@@ -24,16 +24,16 @@ export default class SignIn extends Component{
             },
             body: JSON.stringify(this.state)
         })
-        .then(res => res.json()).then(console.log)
-        // .then(response => {
-        //     if (response.errors){
-        //         this.props.setErrors('Username or Password incorrect.')
-        //     } else {
-        //         this.props.setUser(response.user)
-        //         this.props.history.push('/portfolio')
-        //         this.props.clearErrors()
-        //     }
-        // })        
+        .then(res => res.json())
+        .then(response => {
+            if (response.errors){
+                this.props.setErrors('Username or Password incorrect.')
+            } else {
+                this.props.setUser(response.user)
+                this.props.history.push('/portfolio')
+                this.props.clearErrors()
+            }
+        })        
     }
     
     render () {
