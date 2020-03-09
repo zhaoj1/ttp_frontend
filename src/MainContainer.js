@@ -49,9 +49,7 @@ export default class MainContainer extends Component{
     }
 
     fetchBatch = () => {
-        // this.state.tickerList.length == 0 ?
-            // null
-            // :
+        if(this.state.tickerList.length !== 0){
             fetch(IEX + `stock/market/batch?symbols=${this.state.tickerList.join(',')}&types=quote&range=1m&last=5&token=` + process.env.REACT_APP_IEX_TEST)
             .then(resp => resp.json())
             .then(response => this.setState({
@@ -59,6 +57,7 @@ export default class MainContainer extends Component{
                     ...response
                 }
             }))
+        }
     }
 
     fetchBatchInterval = () => {
@@ -80,7 +79,6 @@ export default class MainContainer extends Component{
     render () {
         return (
             <div className='main-container'>
-                {console.log(this.state.batch)}
                 <Switch>
                     <Route
                         exact path='/'
