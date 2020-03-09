@@ -20,18 +20,20 @@ export default class Transactions extends Component{
                         <div className='transactions'>
                             <div className='transactions-body'>
                                 <h1 className='transactions-header'>Transactions</h1>
-                                {[...this.props.transactions].reverse().map(ele => {
-                                    return(
-                                        <div className='transactions-line-item'>
-                                            <div className='transactions-line-item-left'>
-                                                <label className='line-item-text'>{ele.ticker.toUpperCase()}</label>
+                                <div className='transactions-list'>
+                                    {[...this.props.transactions].reverse().map(ele => {
+                                        return(
+                                            <div className='transactions-line-item'>
+                                                <div className='transactions-line-item-left'>
+                                                    <label className='line-item-text'>{ele.ticker.toUpperCase()}</label>
+                                                </div>
+                                                <div className='transactions-line-item-right'>
+                                                    <label className='line-item-text'>{ele.shares} Share(s) @ ${ele.cost_purchased.toFixed(2)} per share</label>
+                                                </div>
                                             </div>
-                                            <div className='transactions-line-item-right'>
-                                                <label className='line-item-text'>{ele.shares} Share(s) @ ${ele.cost_purchased.toFixed(2)} per share</label>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
+                                        )
+                                    })}
+                                </div>
                             </div>
                         </div>
                     </>

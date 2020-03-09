@@ -140,6 +140,9 @@
   width: 38%;
   margin: auto;
   font-size: 20px;
+}
+
+.transactions-list{
   overflow-y: scroll;
 }
 
