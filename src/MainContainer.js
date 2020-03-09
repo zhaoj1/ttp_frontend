@@ -5,7 +5,6 @@ import Register from './Register'
 import Portfolio from './Portfolio'
 import Transactions from './Transactions'
 
-const IEX = 'https://sandbox.iexapis.com/stable/'
 var portfolio
 
 export default class MainContainer extends Component{
@@ -31,7 +30,7 @@ export default class MainContainer extends Component{
     }
 
     fetchTransactions = async () => {
-        const portfolioTransactions = await fetch('https://stock-app--backend.herokuapp.com/users/' + this.state.currentUser.id + `/transactions`)
+        const portfolioTransactions = await fetch(BACKEND_API + 'users/' + this.state.currentUser.id + `/transactions`)
         .then(resp => resp.json())
         .then(response => this.setState({
             transactions: [
@@ -50,7 +49,7 @@ export default class MainContainer extends Component{
 
     fetchBatch = () => {
         if(this.state.tickerList.length !== 0){
-            fetch(IEX + `stock/market/batch?symbols=${this.state.tickerList.join(',')}&types=quote&range=1m&last=5&token=` + process.env.REACT_APP_IEX_TEST)
+            fetch(IEX + `stock/market/batch?symbols=${this.state.tickerList.join(',')}&types=quote&range=1m&last=5&token=` + REACT_APP_IEX_TEST)
             .then(resp => resp.json())
             .then(response => this.setState({
                 batch: {

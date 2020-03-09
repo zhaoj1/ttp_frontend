@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header'
 
-const IEX = 'https://sandbox.iexapis.com/stable/'
-
 export default class Portfolio extends Component{
     
     constructor(){
@@ -42,7 +40,7 @@ export default class Portfolio extends Component{
     postTransaction = async (cost) => {
         if(this.props.currentUser.cash > (this.state.quantity * parseInt(cost))){
             this.props.updateUserCash(this.state.quantity, parseFloat(cost));
-            const postResp = await fetch('https://stock-app--backend.herokuapp.com/users/' + this.props.currentUser.id + `/transactions`, {
+            const postResp = await fetch(BACKEND_API + 'users/' + this.props.currentUser.id + `/transactions`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,7 +54,7 @@ export default class Portfolio extends Component{
                 })
             })
             if(postResp){
-                fetch('https://stock-app--backend.herokuapp.com/users/' + this.props.currentUser.id, {
+                fetch(BACKEND_API + 'users/' + this.props.currentUser.id, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -76,7 +74,7 @@ export default class Portfolio extends Component{
 
     handleSubmit = (event) => {
         event.preventDefault();
-        fetch(IEX + `stock/${this.state.ticker}/quote?token=` + process.env.REACT_APP_IEX_TEST)
+        fetch(IEX + `stock/${this.state.ticker}/quote?token=` + REACT_APP_IEX_TEST)
         .then(resp => resp.json())
         .then(response => {
             this.postTransaction(response.latestPrice);
