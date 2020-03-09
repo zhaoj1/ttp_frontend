@@ -30,7 +30,7 @@ export default class MainContainer extends Component{
     }
 
     fetchTransactions = async () => {
-        const portfolioTransactions = await fetch(BACKEND_API + 'users/' + this.state.currentUser.id + `/transactions`)
+        const portfolioTransactions = await fetch(process.env.BACKEND_API + 'users/' + this.state.currentUser.id + `/transactions`)
         .then(resp => resp.json())
         .then(response => this.setState({
             transactions: [
@@ -49,7 +49,7 @@ export default class MainContainer extends Component{
 
     fetchBatch = () => {
         if(this.state.tickerList.length !== 0){
-            fetch(IEX + `stock/market/batch?symbols=${this.state.tickerList.join(',')}&types=quote&range=1m&last=5&token=` + REACT_APP_IEX_TEST)
+            fetch(process.env.IEX + `stock/market/batch?symbols=${this.state.tickerList.join(',')}&types=quote&range=1m&last=5&token=` + process.env.REACT_APP_IEX_TEST)
             .then(resp => resp.json())
             .then(response => this.setState({
                 batch: {
